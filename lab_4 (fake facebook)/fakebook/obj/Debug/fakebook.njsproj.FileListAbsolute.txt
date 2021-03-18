@@ -1,0 +1,3 @@
+D:\lab\2s\security\fakebook\fakebook\obj\Debug\fakebook.njsprojAssemblyReference.cache
+D:\lab\2s\security\fakebook\fakebook\obj\Debug\fakebook.njsproj.CoreCompileInputs.cache
+D:\lab\2s\security\fakebook\fakebook\bin\Microsoft.NodejsTools.WebRole.dll
