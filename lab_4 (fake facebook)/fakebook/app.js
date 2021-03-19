@@ -23,6 +23,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', routes);
 app.use('/login', login);
 
@@ -47,21 +48,14 @@ if (app.get('env') === 'development') {
     });
 }
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });
-});
+
+
 
 var serverPort = 443
 
 https.createServer({
-    key: fs.readFileSync('./www.facebook.com.key'),
-    cert: fs.readFileSync('./www.facebook.com.crt'),
+    key: fs.readFileSync('./www.facebook.com.key.pem'),
+    cert: fs.readFileSync('./www.facebook.com.cert.pem'),
     passphrase: '1234'
 }, app).listen(serverPort, function () {
     console.log('Your server is listening on port %d (https://localhost:%d)', serverPort, serverPort);

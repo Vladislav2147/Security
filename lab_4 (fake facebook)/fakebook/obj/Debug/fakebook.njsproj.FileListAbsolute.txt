@@ -1,3 +1,6 @@
 D:\lab\2s\security\fakebook\fakebook\obj\Debug\fakebook.njsprojAssemblyReference.cache
 D:\lab\2s\security\fakebook\fakebook\obj\Debug\fakebook.njsproj.CoreCompileInputs.cache
 D:\lab\2s\security\fakebook\fakebook\bin\Microsoft.NodejsTools.WebRole.dll
+D:\lab\2s\security\lab_4 (fake facebook)\fakebook\obj\Debug\fakebook.njsprojAssemblyReference.cache
+D:\lab\2s\security\lab_4 (fake facebook)\fakebook\obj\Debug\fakebook.njsproj.CoreCompileInputs.cache
+D:\lab\2s\security\lab_4 (fake facebook)\fakebook\bin\Microsoft.NodejsTools.WebRole.dll
