@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
@@ -70,6 +71,23 @@ class _MyHomePageState extends State<MyHomePage> {
   final textPortController = TextEditingController();
   final textDataController = TextEditingController();
   final textOutputController = TextEditingController();
+
+  // String _hash = "";
+  static const platform = const MethodChannel('com.shichko.flutter/hash_channel');
+
+  // Future<void> _getHash(String data) async {
+  //   String hash;
+  //   try {
+  //     final int result = await platform.invokeMethod('getHash', {"data": data});
+  //     hash = '$result%';
+  //   } on PlatformException catch (e) {
+  //     hash = "Failed to get hash: '${e.message}'.";
+  //   }
+  //
+  //   setState(() {
+  //     _hash = hash;
+  //   });
+  // }
 
 
   @override
@@ -162,10 +180,19 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Future<http.Response> sendData (String uri, String data) {
+  Future<http.Response> sendData (String uri, String data) async {
     String encodedData = base64.encode(utf8.encode(data));
-    String hash = sha256.convert(utf8.encode(data)).toString();
-    textOutputController.text = hash;
+    // String hash = sha256.convert(utf8.encode(data)).toString();
+    // textOutputController.text = hash;
+    String hash = "";
+    try {
+      final int result = await platform.invokeMethod('getHash', {"data": data});
+      hash = '$result%';
+      textOutputController.text = hash;
+    } on PlatformException catch (e) {
+      hash = "Failed to get hash: '${e.message}'.";
+    }
+
 
     return http.post(
       //10.0.2.2:1337 || hash.my-services.com
