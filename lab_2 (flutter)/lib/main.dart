@@ -186,8 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
     // textOutputController.text = hash;
     String hash = "";
     try {
-      final int result = await platform.invokeMethod('getHash', {"data": data});
-      hash = '$result%';
+      hash = await platform.invokeMethod('getHash', {"data": data});
       textOutputController.text = hash;
     } on PlatformException catch (e) {
       hash = "Failed to get hash: '${e.message}'.";

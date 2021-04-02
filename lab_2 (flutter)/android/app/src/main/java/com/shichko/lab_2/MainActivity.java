@@ -18,6 +18,12 @@ import com.example.lwocryptocore.lcryptcore.LCryptCore;
 import io.flutter.embedding.android.FlutterActivity;
 
 public class MainActivity extends FlutterActivity {
+
+    static
+    {
+        System.loadLibrary("cryptowrap");
+    }
+
     private final String CHANNEL = "com.shichko.flutter/hash_channel";
 
     @Override
@@ -34,7 +40,7 @@ public class MainActivity extends FlutterActivity {
     }
 
     public String getHash(String data) {
-        String selectedAlgoritm = "belt-hash";
+        String selectedAlgoritm = "sha256";
         byte[] arrBytesForDigest;
         arrBytesForDigest = data.getBytes();
         CryptoCase cryptoCaseDigest = (new LCryptCore()).CreateDigest(selectedAlgoritm, data.getBytes(), arrBytesForDigest.length);
