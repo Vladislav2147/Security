@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:core';
+import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:sensors/sensors.dart';
+
+import 'service/Entropy.dart';
 
 class HashGenerator extends StatelessWidget {
   // This widget is the root of your application.
@@ -55,14 +61,19 @@ class MyHomePage extends StatefulWidget {
 
 class _HashGeneratorPageState extends State<MyHomePage> {
 
-  final TextEditingController _controller = TextEditingController();
+  final _textHexController = TextEditingController();
+  final _textEntropyController = TextEditingController();
+
+  final _textInputController = TextEditingController();
   int length = 0;
   Stopwatch stopwatch = new Stopwatch();
   List<int> times = [];
 
   @override
   void dispose() {
-    _controller.dispose();
+    _textInputController.dispose();
+    _textEntropyController.dispose();
+    _textHexController.dispose();
     super.dispose();
   }
 
@@ -84,7 +95,7 @@ class _HashGeneratorPageState extends State<MyHomePage> {
         child: Column(
           children: [
             TextField(
-              controller: _controller,
+              controller: _textInputController,
               onChanged: (String value) {
                 if (value.length == length + 1) {
                   if (length > 0) {
@@ -120,7 +131,43 @@ class _HashGeneratorPageState extends State<MyHomePage> {
                   ),
                 ),
               ],
-            )
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(5),
+                  child: ElevatedButton(
+                      onPressed: accelerometer,
+                      child: Text("Start Accelerometer Generator", style: TextStyle(fontSize: 22))
+                  ),
+                ),
+                // Padding(
+                //   padding: EdgeInsets.all(5),
+                //   child: ElevatedButton(
+                //       onPressed: reset,
+                //       child: Text("Reset", style: TextStyle(fontSize: 22))
+                //   ),
+                // ),
+              ],
+            ),
+            TextField(
+              controller: _textHexController,
+              style: TextStyle(fontSize: 22),
+              maxLines: 5,
+              enabled: false,
+              decoration: InputDecoration(
+                hintText: 'Hex String',
+              ),
+            ),
+            TextField(
+              controller: _textEntropyController,
+              style: TextStyle(fontSize: 22),
+              maxLines: 1,
+              enabled: false,
+              decoration: InputDecoration(
+                hintText: 'Entropy String',
+              ),
+            ),
           ],
         ),
       )
@@ -128,27 +175,64 @@ class _HashGeneratorPageState extends State<MyHomePage> {
   }
 
   void onSubmit() {
-    String hex = times
-        .map(intToHexByte)
-        .join(" ")
-        .toUpperCase();
-    print(times);
-    print(hex);
-    reset();
-  }
 
-  void reset() {
-    _controller.clear();
+    String hex = hexStringFromIntList(times);
+    _textHexController.text = hex;
+    print(hex);
+
+    double entrpy = entropy(times);
+    _textEntropyController.text = entrpy.toString();
+    print(entrpy);
+
+    _textInputController.clear();
     length = 0;
     times.clear();
   }
 
-  String intToHexByte(int value) {
-    String result = (value % 256).toRadixString(16);
-    if (result.length == 1) {
-      result = "0" + result;
-    }
-    return result;
+  void reset() {
+    _textInputController.clear();
+    _textEntropyController.clear();
+    _textHexController.clear();
+    length = 0;
+    times.clear();
   }
+
+  void accelerometer() {
+    List<AccelerometerEvent> events = [];
+    Stopwatch accelerometerTimer = new Stopwatch();
+    accelerometerTimer.start();
+    StreamSubscription<AccelerometerEvent> subscription;
+    subscription = accelerometerEvents.listen((AccelerometerEvent current) {
+      if (events.length == 32) {
+        subscription.cancel();
+        var normalizedList = events.map((e) => (e.x * e.y * e.z * 31).abs().ceil()).toList();
+        String hex = hexStringFromIntList(normalizedList);
+        _textHexController.text = hex;
+        print(hex);
+
+        double entrpy = entropy(normalizedList);
+        _textEntropyController.text = entrpy.toString();
+        print(entrpy);
+
+      }
+      if (accelerometerTimer.elapsedMilliseconds > 100) {
+        if (events.isEmpty || isMoving(events.last, current, 0.2)) {
+          events.add(current);
+        }
+
+        accelerometerTimer.reset();
+      }
+
+    });
+  }
+
+  bool isMoving(AccelerometerEvent previous, AccelerometerEvent current, double precision) {
+    return (previous.x - current.x).abs() > precision
+        || (previous.y - current.y).abs() > precision
+        || (previous.z - current.z).abs() > precision;
+  }
+
+
+
 
 }
