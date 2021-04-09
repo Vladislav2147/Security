@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:lab_2/hash_generator.dart';
 
 class MyHttpOverrides extends HttpOverrides{
   @override
@@ -17,7 +18,8 @@ class MyHttpOverrides extends HttpOverrides{
 
 void main() {
   HttpOverrides.global = new MyHttpOverrides();
-  runApp(MyApp());
+//  runApp(MyApp());
+  runApp(HashGenerator());
 }
 
 class MyApp extends StatelessWidget {

@@ -1,3 +1,6 @@
 D:\lab\2s\security\nodejs-server-server-generated (1)\obj\Debug\lab_11111.njsprojAssemblyReference.cache
 D:\lab\2s\security\nodejs-server-server-generated (1)\obj\Debug\lab_11111.njsproj.CoreCompileInputs.cache
 D:\lab\2s\security\nodejs-server-server-generated (1)\bin\Microsoft.NodejsTools.WebRole.dll
+D:\lab\2s\security\lab_3 (hash service)\obj\Debug\lab_11111.njsprojAssemblyReference.cache
+D:\lab\2s\security\lab_3 (hash service)\obj\Debug\lab_11111.njsproj.CoreCompileInputs.cache
+D:\lab\2s\security\lab_3 (hash service)\bin\Microsoft.NodejsTools.WebRole.dll

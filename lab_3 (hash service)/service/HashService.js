@@ -60,6 +60,7 @@ function getHash(data) {
         .createHash("sha256")
         .update(data, "utf-8")
         .digest("hex")
+        .toUpperCase()
 
     //return hash
     //    .split("")
