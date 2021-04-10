@@ -20,8 +20,6 @@ String intToBinaryByte(int value) {
   return result;
 }
 
-
-
 String hexStringFromIntList(List<int> list) {
   String result = list.map(intToHexByte).join(" ").toUpperCase();
   return result;
@@ -30,8 +28,22 @@ String hexStringFromIntList(List<int> list) {
 double entropy(List<int> list) {
   String binaryString = list.map(intToBinaryByte).join("");
   print(binaryString);
+  return entropyFromBinaryString(binaryString);
+}
+
+double entropyFromBinaryString(String binaryString) {
   double prob0 = '0'.allMatches(binaryString).length / binaryString.length.toDouble();
   double prob1 = '1'.allMatches(binaryString).length / binaryString.length.toDouble();
   double entropy = -(prob0 * (log(prob0) / log(2)) + prob1 * (log(prob1) / log(2)));
   return entropy;
+}
+
+List<int> getRandomList() {
+  List<int> list = [];
+  Random random = Random();
+  for (int i = 0; i < 32; i++) {
+    list.add(random.nextInt(256));
+  }
+
+  return list;
 }

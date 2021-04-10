@@ -96,18 +96,10 @@ class _HashGeneratorPageState extends State<MyHomePage> {
           children: [
             TextField(
               controller: _textInputController,
-              onChanged: (String value) {
-                if (value.length == length + 1) {
-                  if (length > 0) {
-                    stopwatch.stop();
-                    times.add(stopwatch.elapsedMilliseconds);
-                  }
-                  stopwatch.reset();
-                  length++;
-                  stopwatch.start();
-                }
-
-              },
+              onChanged: onTextChanged,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp("[a-z]")),
+              ],
               maxLength: 33,
               style: TextStyle(fontSize: 22),
               decoration: InputDecoration(
@@ -121,6 +113,13 @@ class _HashGeneratorPageState extends State<MyHomePage> {
                   child: ElevatedButton(
                       onPressed: onSubmit,
                       child: Text("Submit", style: TextStyle(fontSize: 22))
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(5),
+                  child: ElevatedButton(
+                      onPressed: onRandom,
+                      child: Text("Random", style: TextStyle(fontSize: 22))
                   ),
                 ),
                 Padding(
@@ -141,13 +140,6 @@ class _HashGeneratorPageState extends State<MyHomePage> {
                       child: Text("Start Accelerometer Generator", style: TextStyle(fontSize: 22))
                   ),
                 ),
-                // Padding(
-                //   padding: EdgeInsets.all(5),
-                //   child: ElevatedButton(
-                //       onPressed: reset,
-                //       child: Text("Reset", style: TextStyle(fontSize: 22))
-                //   ),
-                // ),
               ],
             ),
             TextField(
@@ -174,6 +166,18 @@ class _HashGeneratorPageState extends State<MyHomePage> {
     );
   }
 
+  void onTextChanged(String value) {
+    if (value.length == length + 1) {
+      if (length > 0) {
+        stopwatch.stop();
+        times.add(stopwatch.elapsedMilliseconds);
+      }
+      stopwatch.reset();
+      length++;
+      stopwatch.start();
+    }
+  }
+
   void onSubmit() {
 
     String hex = hexStringFromIntList(times);
@@ -187,6 +191,17 @@ class _HashGeneratorPageState extends State<MyHomePage> {
     _textInputController.clear();
     length = 0;
     times.clear();
+  }
+
+  void onRandom() {
+    List<int> random = getRandomList();
+    String hex = hexStringFromIntList(random);
+    _textHexController.text = hex;
+    print(hex);
+
+    double entrpy = entropy(random);
+    _textEntropyController.text = entrpy.toString();
+    print(entrpy);
   }
 
   void reset() {
