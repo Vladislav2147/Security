@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Emscripten-Generated Code</title>
+	  {{{ SCRIPT }}}
+  </head>
+  <body>
+    
+	<form onsubmit="return false;">
+		<input type="text" id="input"/><br/>
+    	<button value="callFunc" id="btn1">callFunc</button><br/>
+		<input type="text" id="output"/><br/>
+	</form>
+	 
+    <script type='text/javascript'>
+		var Module = {
+          onRuntimeInitialized: function() {
+            document.getElementById("btn1").addEventListener('click', function(){
+  				const myFunction = Module.cwrap('myFunction', // name of C function
+                             "number", // return type
+                             ["number"]); // arguments
+				var input = document.getElementById("input").value;
+				var output = myFunction(input);
+				document.getElementById("output").value = output;
+				
+			});
+          },
+        };
+		
+	 
+    </script>
+    {{{ SCRIPT }}}
+  </body>
+</html>
