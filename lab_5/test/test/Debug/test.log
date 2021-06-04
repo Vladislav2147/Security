@@ -1,0 +1,3 @@
+﻿  elliptic_curve.cpp
+D:\lab\2s\security\lab_5\test\test\elliptic_curve.cpp(41,23): warning C4018: <: несоответствие типов со знаком и без знака
+  test.vcxproj -> D:\lab\2s\security\lab_5\test\Debug\test.exe

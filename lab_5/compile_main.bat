@@ -1,1 +1,1 @@
-emcc -o main.html main.c -O3 -s WASM=1 --shell-file html_template/shell_minimal.html -s EXPORTED_FUNCTIONS=['_myFunction'] -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
+emcc -o main.html main.cpp -O3 -s WASM=1 --shell-file html_template/shell_minimal.html -s EXPORTED_FUNCTIONS=['_myFunction'] -s "EXTRA_EXPORTED_RUNTIME_METHODS=['ccall', 'cwrap']"
