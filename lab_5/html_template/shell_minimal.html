@@ -9,9 +9,12 @@
   <body>
     
 	<form onsubmit="return false;">
-		<input type="text" id="input"/><br/>
-    	<button value="callFunc" id="btn1">callFunc</button><br/>
-		<input type="text" id="output0"/><br/>
+		<label>Scalar (hex): <input type="text" id="input" size="200"/><br/></label>
+    	<button value="multiply" id="btn1">multiply</button><br/>
+		<label>Gx: <input type="text" id="output0" size="200"/></label><br/>
+		<label>Gy: <input type="text" id="output1" size="200"/></label><br/>
+		<label>Time: <input type="text" id="output2" size="200"/></label><br/>
+
 	</form>
 	 
     <script type='text/javascript'>
@@ -22,8 +25,10 @@
                              "string", // return type
                              ["string"]); // arguments
 				var input = document.getElementById("input").value;
-				var output = myFunction(input);
-				document.getElementById("output0").value = output;				
+				var output = myFunction(input).split("\t\t");
+				document.getElementById("output0").value = output[0];				
+				document.getElementById("output1").value = output[1];				
+				document.getElementById("output2").value = output[2];				
 			});
           },
         };
