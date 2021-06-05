@@ -152,7 +152,7 @@
     <ClCompile Include="elliptic_curve.cpp" />
     <ClCompile Include="module.cpp" />
     <ClCompile Include="point.cpp" />
-    <ClCompile Include="test.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigInteger.h" />

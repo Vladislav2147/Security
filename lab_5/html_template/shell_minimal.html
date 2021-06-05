@@ -11,20 +11,19 @@
 	<form onsubmit="return false;">
 		<input type="text" id="input"/><br/>
     	<button value="callFunc" id="btn1">callFunc</button><br/>
-		<input type="text" id="output"/><br/>
+		<input type="text" id="output0"/><br/>
 	</form>
 	 
     <script type='text/javascript'>
 		var Module = {
           onRuntimeInitialized: function() {
             document.getElementById("btn1").addEventListener('click', function(){
-  				const myFunction = Module.cwrap('myFunction', // name of C function
-                             "number", // return type
-                             ["number"]); // arguments
+  				const myFunction = Module.cwrap('multiply_with_default', // name of C function
+                             "string", // return type
+                             ["string"]); // arguments
 				var input = document.getElementById("input").value;
 				var output = myFunction(input);
-				document.getElementById("output").value = output;
-				
+				document.getElementById("output0").value = output;				
 			});
           },
         };
