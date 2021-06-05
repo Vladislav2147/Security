@@ -9,9 +9,6 @@ public:
     void calculatePoints();
     // Scalar multiplication returns a point X = kP
     Point scalarMultiply(BigInteger k, Point P, char* time);
-    Point scalarMultiplyRDP(BigInteger* k, Point P, int size, BigInteger* D, int sizeD);
-    // Scalar multiplication where the input is NAF representation
-    Point scalarMultiplyNAF(BigInteger* k, Point P, int size);
     // Returns A + B
     Point add(Point A, Point B);
     ~EllipticCurve();
